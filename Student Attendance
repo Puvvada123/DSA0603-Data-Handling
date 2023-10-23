@@ -1,0 +1,44 @@
+# Sample data
+attendance_data <- data.frame(
+  Student = c("Student A", "Student B", "Student C", "Student D"),
+  date = as.Date(c("2023-01-01", "2023-02-02", "2023-01-02", "2023-01-02")),
+  attendance = c("present", "absent", "present", "present")
+)
+
+# i) Calculate the percentage of students present for each class date
+class_dates <- unique(attendance_data$date)
+attendance_percentage <- numeric(length(class_dates))
+
+for (i in seq_along(class_dates)) {
+  attendance_percentage[i] <- mean(attendance_data$attendance[attendance_data$date == class_dates[i]] == "present") * 100
+}
+
+# Print attendance percentage for each class date
+cat("i) Attendance Percentage for Each Class Date:\n")
+for (i in seq_along(class_dates)) {
+  cat("   ", class_dates[i], ": ", attendance_percentage[i], "%\n")
+}
+
+# ii) Determine which student had the highest overall attendance
+student_attendance <- table(attendance_data$Student, attendance_data$attendance)
+present_counts <- student_attendance[, "present"]
+highest_attendance_student <- names(present_counts)[which.max(present_counts)]
+
+cat("\nii) Student with the Highest Overall Attendance: ", highest_attendance_student, "\n")
+
+# iii) Calculate the average attendance percentage
+avg_attendance_percentage <- mean(attendance_percentage, na.rm = TRUE)
+
+cat("\niii) Average Attendance Percentage: ", avg_attendance_percentage, "%\n")
+
+# iv) Create a pie chart to visualize the attendance for each class date
+library(ggplot2)
+
+class_attendance <- data.frame(ClassDate = class_dates, Percentage = attendance_percentage)
+
+# Plotting the pie chart
+ggplot(class_attendance, aes(x = "", y = Percentage, fill = factor(ClassDate))) +
+  geom_bar(stat = "identity", width = 1, color = "white") +
+  coord_polar("y") +
+  ggtitle("Attendance Distribution for Each Class Date") +
+  theme_minimal()
