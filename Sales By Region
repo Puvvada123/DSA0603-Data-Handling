@@ -1,1 +1,29 @@
+# Sample data
+sales_data <- data.frame(
+  Region = c("North", "North", "South", "South"),
+  Month = c("Jan", "Feb", "Jan", "Feb"),
+  Sales = c(5000, 6200, 4800, 5600)
+)
+
+# Calculate total sales by region
+total_sales_by_region <- aggregate(Sales ~ Region, data = sales_data, sum)
+print(total_sales_by_region)
+# Find the region with the highest sales in February
+max_sales_in_feb <- sales_data %>%
+  filter(Month == "Feb") %>%
+  group_by(Region) %>%
+  summarise(TotalSales = sum(Sales)) %>%
+  top_n(1, TotalSales)
+print(max_sales_in_feb)
+
+# Calculate the average sales for all months
+average_sales <- mean(sales_data$Sales)
+print(average_sales)
+# Create a bar chart
+library(ggplot2)
+
+ggplot(sales_data, aes(x = Month, y = Sales, fill = Region)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Sales by Region and Month", x = "Month", y = "Sales (USD)") +
+  theme_minimal()
 
