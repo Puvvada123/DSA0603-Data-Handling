@@ -1,0 +1,15 @@
+product_data<-read.csv("D:/execl/2.csv")
+print(product_data)
+product_data$Inventory_Value <- product_data$Quantity * product_data$ Price
+print(product_data$Inventory_Value)
+max_inventory_electronics <- max(product_data$Inventory_Value[product_data$Category == "Electronics"])
+product_max_electronics <- product_data[product_data$Inventory_Value == max_inventory_electronics, "Product"]
+print(product_max_electronics)
+
+average_price <- mean(product_data$Price)
+print(average_price)
+library(ggplot2)
+
+ggplot(product_data, aes(x = Category, y = Quantity, fill = Product)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Quantity of Products by Category", x = "Category",y="Quantity")
