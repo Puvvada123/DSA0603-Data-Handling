@@ -1,0 +1,32 @@
+# Sample data
+purchases_data <- data.frame(
+  customer = c("customerA", "customerB", "customerA", "customerD"),
+  product = c("widgetX", "widgetY", "widgetZ", "widgetX"),
+  quantity = c(5, 3, 2, 4),
+  price = c(10, 15, 8.50, 9)
+)
+
+# i) Calculate the total spending for each customer
+total_spending_by_customer <- aggregate(price * quantity ~ customer, data = purchases_data, sum)
+print(total_spending_by_customer)
+
+# ii) Determine the most purchased product
+most_purchased_product <- purchases_data$product[which.max(purchases_data$quantity)]
+
+cat("\nii) Most Purchased Product: ", most_purchased_product, "\n")
+
+# iii) Calculate the average price per unit
+avg_price_per_unit <- mean(purchases_data$price)
+
+cat("\niii) Average Price Per Unit: $", avg_price_per_unit, "\n")
+
+# iv) Create a bar chart to visualize the quantity of each product purchased
+library(ggplot2)
+
+# Plotting the bar chart
+ggplot(purchases_data, aes(x = product, y = quantity, fill = product)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Quantity of Each Product Purchased") +
+  xlab("Product") +
+  ylab("Quantity") +
+  theme_minimal()
