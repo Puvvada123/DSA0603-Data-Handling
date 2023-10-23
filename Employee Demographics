@@ -1,0 +1,13 @@
+employee_data<-read.csv("D:/execl/3.csv")
+a<-mean(employee_data$Age)
+print(a)
+gender_distribution <- table(employee_data$Gender)
+print(gender_distribution)
+employee_with_highest_salary <- employee_data[which.max(employee_data$Salary), ]
+print(employee_with_highest_salary)
+library(ggplot2)
+pie_chart <- ggplot(data, aes(x = "", fill = Department)) +
+  geom_bar(width = 1) +
+  coord_polar("y", start = 0) +
+  labs(title = "Employee Distribution by Department") +
+  theme_minimal()
