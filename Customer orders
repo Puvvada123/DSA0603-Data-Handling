@@ -1,0 +1,30 @@
+# Create a data frame with the provided data
+order_data <- data.frame(
+  Order_ID = c(2001, 2002, 2003, 2004),
+  Customer_Name = c("John", "Alice", "Bob", "Sarah"),
+  Product = c("Widget X", "Widget Y", "Widget X", "Widget Z"),
+  Quantity = c(10, 5, 8, 12),
+  Price = c(410,656,410,434)
+)
+
+# Remove the '$' sign from the Price column and convert it to numeric
+#order_data$Price <- as.numeric(gsub("\\$", "", order_data$Price))
+
+# Calculate the total revenue
+total_revenue <- sum(order_data$Quantity * order_data$Price)
+cat("Total Revenue: $", total_revenue, "\n")
+
+# Determine which product had the highest sales
+product_sales <- aggregate(order_data$Quantity, by = list(order_data$Product), FUN = sum)
+product_with_highest_sales <- product_sales[which.max(product_sales$x), 1]
+cat("Product with the Highest Sales: ", product_with_highest_sales, "\n")
+
+# Calculate the average price per unit
+average_price_per_unit <- mean(order_data$Price)
+cat("Average Price Per Unit: $", round(average_price_per_unit, 2), "\n")
+
+# Create a bar chart to visualize the quantity of each product ordered
+library(ggplot2)
+ggplot(order_data, aes(x = Product, y = Quantity)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Product", y = "Quantity", title = "Quantity of Each ProductOrdered")
