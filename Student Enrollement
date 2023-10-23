@@ -1,0 +1,19 @@
+enrollment_data <- data.frame(
+  Student = c("Student A", "Student B", "Student B", "Student C", "Student D"),
+  GradeLevel = c("9th", "10th", "10th", "11th", "9th"),
+  EnrollmentDate = c("2023-08-15", "2023-09-02", "2023-07-20", NA, "2023-08-30")
+)
+
+# Calculate the average grade level
+average_grade_level <- mean(as.numeric(sub("th", "", enrollment_data$GradeLevel)))
+print(average_grade_level)
+# Determine the most recent enrollment date
+most_recent_enrollment <- max(enrollment_data$EnrollmentDate, na.rm = TRUE)
+print(most_recent_enrollment)
+# Find the student with the earliest enrollment date
+earliest_enrollment_student <- enrollment_data[which.min(as.Date(enrollment_data$EnrollmentDate)), "Student"]
+print(earliest_enrollment_student)
+library(ggplot2)
+
+grade_level_counts <- table(enrollment_data$GradeLevel)
+pie(grade_level_counts, labels = paste(names(grade_level_counts), "th Grade"), main = "Student Distribution by Grade Level")
