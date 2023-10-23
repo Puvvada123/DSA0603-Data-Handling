@@ -1,0 +1,13 @@
+feedback_data<-read.csv("D:/execl/1.csv")
+print(feedback_data )
+average_rating <- mean(feedback_data$Rating)
+print(average_rating)
+highest_rated_comment <- feedback_data$Feedback[which.max(feedback_data$Rating)]
+print(highest_rated_comment )
+
+customers_high_rating <- sum(feedback_data$Rating >= 4)
+print(customers_high_rating)
+library(ggplot2)
+ggplot(feedback_data, aes(x = factor(Rating))) +
+  geom_bar(fill = "skyblue") +
+  labs(title = "Distribution of Ratings", x = "Rating",y="Count")
